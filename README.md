@@ -2,33 +2,33 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com)
-[![DigitalOcean](https://img.shields.io/badge/DigitalOcean-Droplets-0080FF.svg)](https://digitalocean.com)
+[![Contabo](https://img.shields.io/badge/Contabo-VPS-0080FF.svg)](https://contabo.com)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **The mobile-first cloud IDE backend powered by DigitalOcean droplets**
+> **The mobile-first cloud IDE backend powered by Contabo VPS**
 
-DevPocket Server is a production-ready FastAPI backend that provides secure, scalable development environments accessible from mobile devices. Each environment runs on a dedicated DigitalOcean droplet with full SSH access, providing native performance and complete control.
+DevPocket Server is a production-ready FastAPI backend that provides secure, scalable development environments accessible from mobile devices. Each environment runs on a dedicated Contabo VPS with full SSH access, providing native performance and complete control.
 
 ## 🚀 Features
 
-- **🔧 Dedicated Droplets**: Each environment runs on its own DigitalOcean droplet
+- **🔧 Dedicated VPS**: Each environment runs on its own Contabo VPS instance
 - **👥 User Management**: Automated `dev` user creation with sudo privileges
 - **🖥️ Full SSH Access**: Direct terminal access as `dev` user via WebSocket-to-SSH bridge
 - **📱 Mobile-First**: Optimized for mobile development workflows
 - **🔒 Secure**: JWT authentication, user password protection, SSH access
 - **⚙️ Complete Dev Stack**: Pre-installed Docker, Git, Python, Node.js, AI coding tools
 - **⚡ Fast Setup**: Cloud-init automated installation with progress tracking
-- **📊 Scalable**: Auto-scaling droplets based on subscription tiers
-- **🌍 Multi-Region**: Deploy droplets in any DigitalOcean region
+- **📊 Scalable**: Auto-scaling VPS instances based on subscription tiers
+- **🌍 Multi-Region**: Deploy VPS instances in Contabo data centers worldwide
 - **💾 Persistent Storage**: Attached block storage volumes for data persistence
 
 ## 🏗️ Architecture
 
 ```mermaid
 flowchart TD
-   A[Mobile App] <--> B[FastAPI Server] <--> C[DigitalOcean API]
+   A[Mobile App] <--> B[FastAPI Server] <--> C[Contabo API]
    B --> D[WebSocket-SSH Bridge]
-   D <--> E[Droplet (SSH as 'dev' user)]
+   D <--> E[VPS (SSH as 'dev' user)]
    E --> F[Development Environment]
    F --> F1[Ubuntu 22.04 LTS]
    F --> F2['dev' user with sudo access]
@@ -41,8 +41,8 @@ flowchart TD
 
 When you create a new environment, here's what happens automatically:
 
-### 1. **Droplet Provisioning** (30-60s)
-- DigitalOcean creates droplet in specified region/size
+### 1. **VPS Provisioning** (30-60s)
+- Contabo creates VPS instance in specified region/size
 - Attaches persistent block storage volume
 - Injects cloud-init script with user configuration
 
@@ -95,7 +95,7 @@ Your environment is now ready with:
 ### Key Components
 
 - **FastAPI Server**: REST API and WebSocket endpoints
-- **DigitalOcean Integration**: Droplet and volume management
+- **Contabo Integration**: VPS and storage management
 - **SSH Bridge**: WebSocket-to-SSH proxy for terminal access
 - **PostgreSQL**: User data, environment metadata, templates
 - **Authentication**: JWT with refresh tokens, Google OAuth
@@ -105,7 +105,7 @@ Your environment is now ready with:
 
 - **Backend**: FastAPI, Python 3.11+
 - **Database**: PostgreSQL (asyncpg with SQLAlchemy async)
-- **Infrastructure**: DigitalOcean Droplets, Block Storage
+- **Infrastructure**: Contabo VPS, Block Storage
 - **Authentication**: JWT, OAuth2, bcrypt
 - **Networking**: asyncssh, WebSockets
 - **Monitoring**: structlog, health checks
@@ -115,8 +115,8 @@ Your environment is now ready with:
 
 - Python 3.11+
 - PostgreSQL (local or cloud)
-- DigitalOcean account with API token
-- SSH key pair for droplet access
+- Contabo account with API credentials
+- SSH key pair for VPS access
 
 ## ⚡ Quick Start
 
@@ -147,11 +147,14 @@ SECRET_KEY=your-secret-key-here
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 REFRESH_TOKEN_EXPIRE_DAYS=7
 
-# DigitalOcean
-DO_API_TOKEN=your-digitalocean-api-token
-DO_DEFAULT_REGION=nyc3
-DO_DEFAULT_SIZE=s-1vcpu-1gb
-DO_SSH_KEY_FINGERPRINT=your-ssh-key-fingerprint
+# Contabo
+CONTABO_CLIENT_ID=your-contabo-client-id
+CONTABO_CLIENT_SECRET=your-contabo-client-secret
+CONTABO_USERNAME=your-contabo-username
+CONTABO_PASSWORD=your-contabo-password
+CONTABO_DEFAULT_REGION=EU
+CONTABO_DEFAULT_SIZE=VPS-S-1vcpu-2gb
+CONTABO_SSH_KEY_ID=your-ssh-key-id
 
 # Email (optional)
 RESEND_API_KEY=your-resend-api-key
@@ -202,11 +205,11 @@ app/
 │   └── logging.py          # Structured logging
 ├── models/                 # SQLAlchemy ORM models and Pydantic schemas
 │   ├── user.py             # User and authentication models
-│   └── environment.py      # Environment and droplet models
+│   └── environment.py      # Environment and VPS models
 ├── services/               # Business logic layer
 │   ├── auth_service.py     # Authentication and user management
 │   ├── environment_service.py  # Environment lifecycle management
-│   └── digitalocean_service.py # DigitalOcean API integration
+│   └── contabo_service.py # Contabo API integration
 ├── api/                    # HTTP and WebSocket endpoints
 │   ├── auth.py             # Authentication endpoints
 │   ├── environments.py     # Environment CRUD operations
@@ -230,17 +233,17 @@ tests/                      # Test suites
 - `GET /api/v1/auth/me` - Get current user
 
 ### Environments
-- `POST /api/v1/environments` - Create new environment (droplet)
+- `POST /api/v1/environments` - Create new environment (VPS)
 - `GET /api/v1/environments` - List user environments
 - `GET /api/v1/environments/{id}` - Get environment details
-- `POST /api/v1/environments/{id}/start` - Power on droplet
-- `POST /api/v1/environments/{id}/stop` - Power off droplet
-- `POST /api/v1/environments/{id}/snapshot` - Create droplet snapshot
-- `POST /api/v1/environments/{id}/resize` - Resize droplet
+- `POST /api/v1/environments/{id}/start` - Power on VPS
+- `POST /api/v1/environments/{id}/stop` - Power off VPS
+- `POST /api/v1/environments/{id}/snapshot` - Create VPS snapshot
+- `POST /api/v1/environments/{id}/resize` - Resize VPS
 
-### DigitalOcean Resources
+### Contabo Resources
 - `GET /api/v1/regions` - List available regions
-- `GET /api/v1/sizes` - List droplet sizes and pricing
+- `GET /api/v1/sizes` - List VPS sizes and pricing
 
 ### WebSocket
 - `WS /api/v1/ws/terminal/{id}` - SSH terminal access
@@ -337,17 +340,20 @@ docker-compose -f docker-compose.prod.yml -f docker-compose.ssl.yml up -d
 |----------|-------------|---------|
 | `DATABASE_URL` | PostgreSQL connection string | `postgresql+asyncpg://user:pass@localhost:5432/devpocket_server` |
 | `SECRET_KEY` | JWT secret key | - |
-| `DO_API_TOKEN` | DigitalOcean API token | - |
-| `DO_DEFAULT_REGION` | Default droplet region | `nyc3` |
-| `DO_DEFAULT_SIZE` | Default droplet size | `s-1vcpu-1gb` |
-| `DO_SSH_KEY_FINGERPRINT` | SSH key fingerprint | - |
+| `CONTABO_CLIENT_ID` | Contabo API client ID | - |
+| `CONTABO_CLIENT_SECRET` | Contabo API client secret | - |
+| `CONTABO_USERNAME` | Contabo username | - |
+| `CONTABO_PASSWORD` | Contabo password | - |
+| `CONTABO_DEFAULT_REGION` | Default VPS region | `EU` |
+| `CONTABO_DEFAULT_SIZE` | Default VPS size | `VPS-S-1vcpu-2gb` |
+| `CONTABO_SSH_KEY_ID` | SSH key ID | - |
 | `DEV_USER_DEFAULT_SHELL` | Default shell for dev user | `/bin/bash` |
 | `INSTALL_TIMEOUT_MINUTES` | Cloud-init timeout | `15` |
 | `ALLOWED_ORIGINS` | CORS allowed origins | `*` |
 
 ### Subscription Tiers
 
-| Tier | Price | Droplets | Specs | Storage | Pre-installed Stack |
+| Tier | Price | VPS Instances | Specs | Storage | Pre-installed Stack |
 |------|-------|----------|-------|---------|--------------------|
 | Starter | $19/mo | 3 | 1 vCPU, 1GB RAM | 25GB SSD | Full dev stack + AI tools |
 | Pro | $99/mo | Unlimited | 2 vCPU, 2GB RAM | 60GB SSD | Full dev stack + AI tools |
@@ -393,7 +399,7 @@ logger = structlog.get_logger()
 logger.info("Environment created", 
            user_id=user_id, 
            environment_id=env_id,
-           droplet_id=droplet.id)
+           vps_id=vps.id)
 ```
 
 ### Metrics
@@ -401,18 +407,18 @@ logger.info("Environment created",
 Key metrics to monitor:
 - Environment creation success rate
 - WebSocket connection stability
-- Droplet provisioning time
+- VPS provisioning time
 - API response times
 - User authentication errors
 
 ## 🚀 Deployment
 
-### DigitalOcean App Platform
+### Contabo Deployment
 
 1. Fork this repository
-2. Connect to DigitalOcean App Platform
+2. Set up Contabo VPS instance
 3. Set environment variables
-4. Deploy automatically on git push
+4. Deploy using docker-compose or manual setup
 
 ### Manual Deployment
 
@@ -429,7 +435,7 @@ Key metrics to monitor:
 - **Authorization**: Role-based access control
 - **Rate Limiting**: Per-user request limiting
 - **CORS**: Configurable cross-origin policies
-- **SSH Keys**: Secure droplet access
+- **SSH Keys**: Secure VPS access
 - **Data Encryption**: Sensitive data encrypted at rest
 - **Input Validation**: Comprehensive request validation
 
@@ -474,7 +480,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Phase 1 - Core Features ✅
 - [x] User authentication and authorization
-- [x] DigitalOcean droplet management
+- [x] Contabo VPS management
 - [x] SSH terminal access via WebSocket
 - [x] Environment templates and cloud-init
 
@@ -495,7 +501,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🌟 Acknowledgments
 
 - **FastAPI** - Modern Python web framework
-- **DigitalOcean** - Cloud infrastructure provider
+- **Contabo** - Cloud infrastructure provider
 - **PostgreSQL** - Relational database with async support
 - **Tmux** - Terminal multiplexer for session persistence
 

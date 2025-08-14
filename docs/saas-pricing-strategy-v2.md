@@ -142,7 +142,7 @@ Gross Margin: 83.3%
 
 3. **Contabo Advantages**:
    - 32TB bandwidth included per VPS (vs 1-3TB on competitors)
-   - Superior specs at 50-70% lower cost than DigitalOcean/Linode
+   - Superior specs at 50-70% lower cost than AWS/DigitalOcean/Linode
    - European data centers với excellent APAC connectivity
    - No hidden fees or egress charges
 
