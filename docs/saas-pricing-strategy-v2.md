@@ -1,8 +1,8 @@
-## 💰 **DevPocket Pricing Strategy 2025** - Powered by DigitalOcean
+## 💰 **DevPocket Pricing Strategy 2025** - Powered by Contabo VPS
 
 ### 🎯 **NO FREE TIER APPROACH**
 
-**Strategy**: Focus on dedicated droplets for all users, providing premium experience from day 1
+**Strategy**: Focus on dedicated VPS instances for all users, providing premium experience from day 1
 
 **Benefits**:
 - No shared resource contention
@@ -16,13 +16,13 @@
 ---
 
 ### 🚀 **STARTER** - "Developer" 
-**$19/month** (or $190/year - save 20%)
+**$29/month** (or $290/year - save 20%)
 
 **Specs:**
-- ✅ 3 dedicated DigitalOcean droplets
-- ✅ 1 vCPU, 1GB RAM per droplet (s-1vcpu-1gb)
-- ✅ 25GB NVMe SSD storage per droplet
-- ✅ 1TB/month bandwidth
+- ✅ 1 dedicated Contabo Cloud VPS 10 instance
+- ✅ 3 vCPUs, 8GB RAM
+- ✅ 75GB NVMe SSD storage
+- ✅ 32TB/month bandwidth (unlimited incoming)
 - ✅ Unlimited session time
 - ✅ Private projects
 - ✅ Full SSH terminal access
@@ -36,11 +36,11 @@
 **Cost Structure:**
 ```
 Infrastructure per user:
-- 3x s-1vcpu-1gb Droplet: $6 x 3 x 0.4 usage = $7.20
-- Storage 75GB: $7.50
-- Bandwidth & overhead: $1.50
-Total Cost: ~$16.20
-Gross Margin: 14.7%
+- 1x Cloud VPS 10: €4.50 (~$4.95) 
+- Platform overhead & support: $2.00
+- Payment processing (2.9%): $0.84
+Total Cost: ~$7.79
+Gross Margin: 73.1%
 ```
 
 **Entry-level pricing to attract users, optimize for retention**
@@ -50,16 +50,16 @@ Gross Margin: 14.7%
 ---
 
 ### 💎 **PRO** - "Professional"
-**$99/month** (or $990/year - save 20%)
+**$79/month** (or $790/year - save 20%)
 
 **Specs:**
-- ✅ **Unlimited environments** 
-- ✅ 2 vCPUs, 2GB RAM per environment (s-2vcpu-2gb)
-- ✅ 60GB NVMe SSD storage per environment
-- ✅ 5TB/month bandwidth
-- ✅ GPU droplets available (pay-per-hour)
+- ✅ **3 dedicated environments** 
+- ✅ 1x Cloud VPS 20 (6 vCPUs, 12GB RAM)
+- ✅ 100GB NVMe SSD storage per VPS
+- ✅ 32TB/month bandwidth per VPS
+- ✅ GPU instances available (pay-per-hour)
 - ✅ Full root access & Docker
-- ✅ Database droplet templates (PostgreSQL, MySQL, Redis)
+- ✅ Database VPS templates (PostgreSQL, MySQL, Redis)
 - ✅ Port forwarding & SSH tunneling
 - ✅ Custom domains with SSL
 - ✅ Team collaboration (up to 3 users)
@@ -73,15 +73,46 @@ Gross Margin: 14.7%
 **Cost Structure:**
 ```
 Infrastructure per user:
-- Avg 5 active environments
-- s-2vcpu-2gb Droplets: $18 x 5 x 0.4 = $36
-- Storage 300GB: $30
-- Bandwidth & services: $6
-Total Cost: ~$72
-Gross Margin: 27.3%
+- 1x Cloud VPS 20: €7.00 (~$7.70)
+- Platform overhead & support: $4.00
+- Payment processing (2.9%): $2.29
+Total Cost: ~$13.99
+Gross Margin: 82.3%
 ```
 
 **Target**: Professional developers, small teams, agencies
+
+---
+
+### 🚀 **TEAM** - "Business"
+**$199/month** (or $1990/year - save 20%)
+
+**Specs:**
+- ✅ **10 dedicated environments**
+- ✅ 1x Cloud VPS 30 (8 vCPUs, 24GB RAM) 
+- ✅ 200GB NVMe SSD storage
+- ✅ 32TB/month bandwidth
+- ✅ Team collaboration (up to 10 users)
+- ✅ Advanced admin controls
+- ✅ SSO/SAML integration
+- ✅ Dedicated account manager
+- ✅ 24/7 phone support
+- ✅ 99.99% uptime SLA
+- ✅ Custom domain with wildcard SSL
+- ✅ Advanced CI/CD pipelines
+- ✅ Compliance reports (SOC2, GDPR)
+
+**Cost Structure:**
+```
+Infrastructure per team:
+- 1x Cloud VPS 30: €14.00 (~$15.40)
+- Platform overhead & enterprise features: $12.00
+- Payment processing (2.9%): $5.77
+Total Cost: ~$33.17
+Gross Margin: 83.3%
+```
+
+**Target**: Small to medium businesses, development agencies, educational institutions
 
 ---
 
@@ -89,7 +120,7 @@ Gross Margin: 27.3%
 
 1. **Mobile-First UX**: Touch gestures, offline mode
 2. **Vietnam Pricing**: Chấp nhận VNPay, Momo 
-3. **Better Performance**: DigitalOcean's network tốt hơn ở APAC
+3. **Better Performance**: Contabo's global network with excellent APAC coverage
 4. **Flexible Resources**: Scale up/down theo giờ
 5. **Local Support**: Tiếng Việt, timezone VN
 
@@ -109,10 +140,11 @@ Gross Margin: 27.3%
    - Predictive scaling dựa vào usage patterns
    - Off-peak discounts (23h-6h giảm 30%)
 
-3. **DigitalOcean Advantages**:
-   - No egress fees trong APAC
-   - Free control plane (tiết kiệm $40/month)
-   - Volume discounts khi scale
+3. **Contabo Advantages**:
+   - 32TB bandwidth included per VPS (vs 1-3TB on competitors)
+   - Superior specs at 50-70% lower cost than DigitalOcean/Linode
+   - European data centers với excellent APAC connectivity
+   - No hidden fees or egress charges
 
 ---
 
@@ -127,8 +159,9 @@ Gross Margin: 27.3%
 
 ### Vietnam Special:
 ```
-Starter: 399,000đ/tháng (hoặc 3,990,000đ/năm)
-Pro: 1,990,000đ/tháng (hoặc 19,900,000đ/năm)
+Starter: 699,000đ/tháng (hoặc 6,990,000đ/năm)
+Pro: 1,890,000đ/tháng (hoặc 18,900,000đ/năm)
+Team: 4,790,000đ/tháng (hoặc 47,900,000đ/năm)
 
 Payment methods:
 - Momo, ZaloPay, VNPay
@@ -142,17 +175,17 @@ Payment methods:
 
 ### Conservative Case:
 ```
-Month 1: 50 paid users (40 starter, 10 pro) = $1,750 MRR
-Month 3: 200 paid users (160 starter, 40 pro) = $7,000 MRR
-Month 6: 800 paid users (600 starter, 200 pro) = $31,200 MRR
-Month 12: 2,000 paid users (1,400 starter, 600 pro) = $85,600 MRR
+Month 1: 50 paid users (30 starter, 15 pro, 5 team) = $2,660 MRR
+Month 3: 200 paid users (120 starter, 60 pro, 20 team) = $10,620 MRR
+Month 6: 500 paid users (250 starter, 150 pro, 100 team) = $33,100 MRR
+Month 12: 1,500 paid users (750 starter, 450 pro, 300 team) = $97,300 MRR
 ```
 
 ### Optimistic Case:
 ```
-Month 6: 1,500 paid users = $50,000 MRR
-Month 12: 5,000 paid users = $150,000 MRR
-Year 2: 15,000 paid users = $500,000 MRR
+Month 6: 1,000 paid users = $66,200 MRR
+Month 12: 3,000 paid users = $194,600 MRR
+Year 2: 10,000 paid users = $648,000 MRR
 ```
 
 ---
@@ -162,7 +195,7 @@ Year 2: 15,000 paid users = $500,000 MRR
 1. **Infrastructure Risks**:
    - Multi-region deployment (Singapore + Mumbai)
    - Backup sang AWS/GCP nếu cần
-   - DigitalOcean Spaces cho static assets
+   - Contabo Object Storage cho static assets
 
 2. **Price Sensitivity**:
    - A/B test pricing ở different markets
@@ -195,4 +228,4 @@ Year 2: 15,000 paid users = $500,000 MRR
 
 ---
 
-Với pricing strategy này, MyPod.Dev sẽ có gross margin >50% ở tất cả paid tiers, competitive pricing so với market, và clear path to profitability. DigitalOcean infrastructure cho phép scale nhanh với chi phí thấp hơn GCP/AWS khoảng 30-40%.
+Với pricing strategy này, DevPocket.app sẽ có gross margin >70-83% ở tất cả paid tiers, extremely competitive pricing so với market leaders như Replit ($15-25/mo) và GitHub Codespaces ($20-40/mo), và clear path to profitability từ tháng đầu tiên. Contabo VPS infrastructure cho phép chúng ta offer specs cao gấp 2-3 lần competitors với chi phí thấp hơn 50-70%.

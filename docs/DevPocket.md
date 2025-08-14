@@ -7,8 +7,8 @@ Domain: DevPocket.app
 ## 🧐 Market & Competitor Insights
 
 - **Sweet Spot Pricing**
-  - $19 - $99: Perfect psychological pricing ladder  
-    ↳ Rẻ hơn Replit 50% nhưng vẫn profitable (margin 40-60%)
+  - $29 - $79 - $199: Perfect psychological pricing ladder  
+    ↳ Competitive với Replit/GitHub Codespaces nhưng specs cao hơn 2-3x (margin 70-83%)
   - Focus on paid users from day 1 for sustainable growth
 
 ## 🏆 Unique Selling Points
@@ -45,8 +45,8 @@ Domain: DevPocket.app
 
 ## 📊 Reality Check
 
-- **Year 1:** 2-5K paid users, $30-60K MRR realistic
-- **Year 2:** 10-20K paid users, $150-300K MRR possible
+- **Year 1:** 1-2K paid users, $60-100K MRR realistic
+- **Year 2:** 5-10K paid users, $300-600K MRR possible
 - **Exit opportunity:** $10-20M với strong paid user base
 
 ## ⚠️ Cảnh Báo

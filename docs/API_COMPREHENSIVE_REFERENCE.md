@@ -279,7 +279,7 @@ Resend email verification.
 ## Environment Management
 
 ### POST /api/v1/environments
-Create a new development environment using DigitalOcean Droplets. **Returns immediately** with "creating" status while droplet is provisioned asynchronously in the background.
+Create a new development environment using Contabo VPS instances. **Returns immediately** with "creating" status while VPS instance is provisioned asynchronously in the background.
 
 **Authentication**: Required (Bearer token)  
 **Content-Type**: `application/json`
@@ -308,8 +308,8 @@ Create a new development environment using DigitalOcean Droplets. **Returns imme
   "template_id": "507f1f77bcf86cd799439012",
   "template_name": "Python 3.11",
   "status": "creating",
-  "droplet_id": null,
-  "droplet_ip": null,
+  "instance_id": null,
+  "instance_ip": null,
   "ssh_port": 22,
   "region": "nyc3",
   "size": "s-1vcpu-1gb",
@@ -332,17 +332,17 @@ Create a new development environment using DigitalOcean Droplets. **Returns imme
 
 **Asynchronous Environment Creation Process**:
 
-The environment creation follows a detailed status state machine with DigitalOcean Droplet architecture:
+The environment creation follows a detailed status state machine with Contabo VPS architecture:
 
-1. **`creating`** - API responds immediately, droplet creation initiated with cloud-init user-data
-2. **`provisioning`** - DigitalOcean creating droplet and attaching volume
+1. **`creating`** - API responds immediately, VPS instance creation initiated with cloud-init user-data
+2. **`provisioning`** - Contabo creating VPS instance and attaching storage
 3. **`installing`** - Cloud-init script running:
    - Creates `dev` user with provided password and sudo privileges
    - Installs core development tools (docker, git, curl, python, node.js)
    - Installs AI coding tools (Claude Code, Gemini CLI, Open Code)
    - Sets up tmux configuration and workspace
 4. **`configuring`** - Final configuration, environment setup, and user permissions
-5. **`running`** - Droplet is ready, SSH accessible as `dev` user, all tools installed
+5. **`running`** - VPS instance is ready, SSH accessible as `dev` user, all tools installed
 
 **User Setup**:
 - **`dev` User**: Created with authenticated user's password
@@ -384,7 +384,7 @@ To monitor environment creation progress, use WebSocket endpoints:
 
 **Improved Timeline** (with Enhanced Development Stack):
 - **API Response**: Immediate (< 1 second)
-- **Droplet Creation**: 30-60 seconds (DigitalOcean provisioning)
+- **VPS Creation**: 2-5 minutes (Contabo provisioning)
 - **User Setup**: 30 seconds (dev user creation and sudo configuration)
 - **Core Installation**: 3-5 minutes (system packages, docker, git, python)
 - **Development Tools**: 2-4 minutes (NVM, Node.js, pnpm, AI tools)
@@ -485,7 +485,7 @@ Delete an environment.
 **Response (204)**: No content
 
 ### POST /api/v1/environments/{environment_id}/start
-Start a stopped environment by powering on the DigitalOcean Droplet.
+Start a stopped environment by powering on the Contabo VPS instance.
 
 **Authentication**: Required (Bearer token)
 
@@ -501,7 +501,7 @@ Start a stopped environment by powering on the DigitalOcean Droplet.
 ```
 
 **Requirements**: Environment must be in `stopped` state
-**Mechanism**: Powers on the DigitalOcean Droplet via API
+**Mechanism**: Powers on the Contabo VPS instance via API
 **Benefits**: 
 - Fast startup (30-60 seconds)
 - Preserves all data and configuration
@@ -509,7 +509,7 @@ Start a stopped environment by powering on the DigitalOcean Droplet.
 - No re-provisioning needed
 
 ### POST /api/v1/environments/{environment_id}/stop
-Stop a running environment by powering off the DigitalOcean Droplet.
+Stop a running environment by powering off the Contabo VPS instance.
 
 **Authentication**: Required (Bearer token)
 
@@ -525,10 +525,10 @@ Stop a running environment by powering off the DigitalOcean Droplet.
 ```
 
 **Requirements**: Environment must be in `running` state
-**Mechanism**: Powers off the DigitalOcean Droplet via API
+**Mechanism**: Powers off the Contabo VPS instance via API
 **Benefits**:
 - Graceful shutdown preserving all data
-- No billing for powered-off droplets (only storage)
+- Reduced billing for powered-off VPS instances
 - Fast restart capability
 - Maintains all configuration and installed packages
 
@@ -862,10 +862,10 @@ Initialize the system with default templates.
 - `403`: Forbidden - Admin access required
 - `500`: Internal server error
 
-## DigitalOcean Resources Management
+## Contabo Resources Management
 
 ### GET /api/v1/regions
-Get available DigitalOcean regions for droplet deployment.
+Get available Contabo regions for VPS deployment.
 
 **Authentication**: Required (Bearer token)  
 
@@ -873,14 +873,14 @@ Get available DigitalOcean regions for droplet deployment.
 ```json
 [
   {
-    "slug": "nyc3",
-    "name": "New York 3",
+    "slug": "EU",
+    "name": "European Union",
     "available": true,
     "features": ["private_networking", "backups", "ipv6", "metadata", "volumes"]
   },
   {
-    "slug": "sfo3",
-    "name": "San Francisco 3",
+    "slug": "US-central",
+    "name": "United States Central",
     "available": true,
     "features": ["private_networking", "backups", "ipv6", "metadata", "volumes"]
   }
@@ -904,7 +904,7 @@ Get available DigitalOcean regions for droplet deployment.
 ```
 
 ### GET /api/v1/sizes
-Get available droplet sizes with specifications and pricing.
+Get available VPS sizes with specifications and pricing.
 
 **Authentication**: Required (Bearer token)
 
@@ -912,43 +912,43 @@ Get available droplet sizes with specifications and pricing.
 ```json
 [
   {
-    "slug": "s-1vcpu-512mb-10gb",
-    "name": "Basic",
-    "memory": 512,
-    "vcpus": 1,
-    "disk": 10,
-    "transfer": 0.5,
-    "price_monthly": 4.0,
-    "price_hourly": 0.00595,
+    "slug": "V91",
+    "name": "VPS 10 NVMe",
+    "memory": 4096,
+    "vcpus": 4,
+    "disk": 75,
+    "transfer": 32.0,
+    "price_monthly": 7.99,
+    "price_hourly": 0.0119,
     "tier": "free"
   },
   {
-    "slug": "s-1vcpu-1gb",
-    "name": "Starter",
-    "memory": 1024,
-    "vcpus": 1,
-    "disk": 25,
-    "transfer": 1.0,
-    "price_monthly": 6.0,
-    "price_hourly": 0.00893,
+    "slug": "V94",
+    "name": "VPS 20 NVMe",
+    "memory": 8192,
+    "vcpus": 6,
+    "disk": 100,
+    "transfer": 32.0,
+    "price_monthly": 15.99,
+    "price_hourly": 0.0238,
     "tier": "starter"
   },
   {
-    "slug": "s-2vcpu-2gb",
-    "name": "Pro",
-    "memory": 2048,
-    "vcpus": 2,
-    "disk": 60,
-    "transfer": 3.0,
-    "price_monthly": 18.0,
-    "price_hourly": 0.02679,
+    "slug": "V97",
+    "name": "VPS 30 NVMe",
+    "memory": 16384,
+    "vcpus": 8,
+    "disk": 200,
+    "transfer": 32.0,
+    "price_monthly": 29.99,
+    "price_hourly": 0.0447,
     "tier": "pro"
   }
 ]
 ```
 
 ### POST /api/v1/environments/{environment_id}/snapshot
-Create a snapshot of the environment's droplet for backup.
+Create a snapshot of the environment's VPS instance for backup.
 
 **Authentication**: Required (Bearer token)
 
@@ -974,7 +974,7 @@ Create a snapshot of the environment's droplet for backup.
 ```
 
 ### POST /api/v1/environments/{environment_id}/resize
-Resize the droplet to a different size (vertical scaling).
+Resize the VPS instance to a different size (vertical scaling).
 
 **Authentication**: Required (Bearer token)
 
@@ -984,7 +984,7 @@ Resize the droplet to a different size (vertical scaling).
 **Request Body**:
 ```json
 {
-  "size": "s-2vcpu-2gb",
+  "size": "V97",
   "permanent_disk_resize": false
 }
 ```
@@ -992,14 +992,14 @@ Resize the droplet to a different size (vertical scaling).
 **Response (200)**:
 ```json
 {
-  "message": "Droplet resize initiated",
-  "new_size": "s-2vcpu-2gb",
+  "message": "VPS resize initiated",
+  "new_size": "V97",
   "status": "resizing",
   "estimated_time": "2-5 minutes"
 }
 ```
 
-**Note**: Droplet will be powered off during resize operation.
+**Note**: VPS instance will be powered off during resize operation.
 
 ## WebSocket Endpoints
 
@@ -1015,8 +1015,8 @@ wss://devpocket-api.goon.vn/api/v1/ws/terminal/507f1f77bcf86cd799439011?token=ey
 
 **Connection Flow**:
 1. WebSocket connection authenticated with JWT
-2. Server retrieves droplet IP from database
-3. Server establishes SSH connection to droplet
+2. Server retrieves VPS instance IP from database
+3. Server establishes SSH connection to VPS instance
 4. Bidirectional bridge between WebSocket and SSH PTY
 
 **Message Types**:
@@ -1240,8 +1240,8 @@ wss://devpocket-api.goon.vn/api/v1/ws/logs/507f1f77bcf86cd799439011?token=eyJ0eX
   "template_id": "string (ObjectId)",
   "template_name": "string",
   "status": "string (creating|installing|running|stopped|terminated|error)",
-  "droplet_id": "integer",
-  "droplet_ip": "string",
+  "instance_id": "integer",
+  "instance_ip": "string",
   "ssh_port": "integer",
   "region": "string",
   "size": "string",
@@ -1288,12 +1288,12 @@ wss://devpocket-api.goon.vn/api/v1/ws/logs/507f1f77bcf86cd799439011?token=eyJ0eX
 }
 ```
 
-**Droplet Model**:
+**VPS Instance Model**:
 ```json
 {
   "id": "string (ObjectId)",
   "environment_id": "string (ObjectId)",
-  "droplet_id": "integer",
+  "instance_id": "integer",
   "name": "string",
   "status": "string (new|active|off|archive)",
   "ip_address": "string",

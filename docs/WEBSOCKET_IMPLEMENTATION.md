@@ -18,10 +18,10 @@ This document provides a complete implementation guide for integrating WebSocket
 
 ## Overview
 
-The DevPocket WebSocket terminal provides real-time PTY (pseudo-terminal) access to development environments via SSH bridge to DigitalOcean droplets. The implementation supports:
+The DevPocket WebSocket terminal provides real-time PTY (pseudo-terminal) access to development environments via SSH bridge to Contabo VPS instances. The implementation supports:
 
 - **Full PTY terminal emulation** with ANSI escape sequences via SSH
-- **Direct SSH access** to DigitalOcean droplets
+- **Direct SSH access** to Contabo VPS instances
 - **Interactive programs** (vim, nano, htop, tmux, etc.)
 - **Real-time bidirectional communication** (WebSocket ↔ SSH ↔ PTY)
 - **Terminal resize support** for responsive layouts
@@ -55,8 +55,8 @@ wss://{API_BASE_URL}/api/v1/ws/logs/{environment_id}?token={jwt_token}
 
 #### Terminal Connection Flow
 1. **Authentication**: JWT token validated on connection
-2. **Droplet Lookup**: Server retrieves droplet IP from database
-3. **SSH Connection**: Server establishes SSH connection to droplet as `dev` user
+2. **VPS Lookup**: Server retrieves VPS instance IP from database
+3. **SSH Connection**: Server establishes SSH connection to VPS instance as `dev` user
 4. **User Authentication**: SSH login with user's password or SSH key
 5. **PTY Session**: Server creates PTY session in tmux for persistence
 6. **Bridge Setup**: Bidirectional bridge between WebSocket and SSH
@@ -67,7 +67,7 @@ wss://{API_BASE_URL}/api/v1/ws/logs/{environment_id}?token={jwt_token}
 #### Installation Logs Connection Flow
 1. **Authentication**: JWT token validated on connection
 2. **Status Check**: Server checks if environment is in INSTALLING status
-3. **SSH Connection**: Server establishes SSH connection to droplet
+3. **SSH Connection**: Server establishes SSH connection to VPS instance
 4. **Log Streaming**: Server streams multiple log sources:
    - `/var/log/cloud-init-output.log` - Cloud-init progress
    - `/var/log/devpocket-install.log` - Custom installation script
@@ -161,7 +161,7 @@ class WebSocketTerminalService {
   final StreamController<ConnectionState> _connectionController = StreamController.broadcast();
   
   // SSH Bridge Information
-  String? _dropletIp;
+  String? _instanceIp;
   bool _sshConnected = false;
   
   Timer? _pingTimer;
@@ -267,7 +267,7 @@ class WebSocketTerminalService {
   
   void _handleWelcomeMessage(Map<String, dynamic> message) {
     final environmentData = message['environment'] as Map<String, dynamic>?;
-    _dropletIp = environmentData?['droplet_ip'] as String?;
+    _instanceIp = environmentData?['instance_ip'] as String?;
     _sshConnected = message['ssh_connected'] as bool? ?? false;
     
     final welcomeMessage = TerminalMessage.welcome(
@@ -276,7 +276,7 @@ class WebSocketTerminalService {
     );
     
     _messageController.add(welcomeMessage);
-    print('Connected to droplet: ${environmentData?['name']} at ${_dropletIp}');
+    print('Connected to VPS instance: ${environmentData?['name']} at ${_instanceIp}');
   }
   
   void _handleOutputMessage(Map<String, dynamic> message) {
@@ -350,9 +350,9 @@ class WebSocketTerminalService {
     "id": "68850093852e1ff1492d3d87",
     "name": "my-dev-env",
     "status": "running",
-    "droplet_id": 123456789,
-    "droplet_ip": "167.99.123.45",
-    "region": "nyc3",
+    "instance_id": 123456789,
+    "instance_ip": "167.99.123.45",
+    "region": "EU",
     "size": "s-1vcpu-1gb",
     "pty_enabled": true,
     "installed_tools": {
@@ -974,7 +974,7 @@ class _PTYTerminalWidgetState extends State<PTYTerminalWidget> {
 
 ### Installation Logs WebSocket Service Implementation
 
-The logs WebSocket service monitors cloud-init progress on DigitalOcean droplets during environment setup. Here's the complete implementation:
+The logs WebSocket service monitors cloud-init progress on Contabo VPS instances during environment setup. Here's the complete implementation:
 
 **lib/services/installation_logs_websocket_service.dart:**
 ```dart
@@ -987,7 +987,7 @@ import 'storage_service.dart';
 class InstallationLogsWebSocketService {
   static const String _baseWsUrl = 'wss://devpocket-api.goon.vn';
   
-  String? _dropletIp;
+  String? _instanceIp;
   bool _cloudInitComplete = false;
   
   WebSocketChannel? _channel;

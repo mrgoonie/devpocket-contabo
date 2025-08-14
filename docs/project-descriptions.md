@@ -33,8 +33,9 @@ Transform your phone into a powerful development machine! Code, build, and deplo
 - Anyone wanting to code without a laptop
 
 **💰 Pricing:**
-- STARTER ($19/mo): 3 environments with dedicated droplets
-- PRO ($99/mo): Unlimited environments, premium resources
+- STARTER ($29/mo): 1 dedicated Cloud VPS (3 vCPUs, 8GB RAM, 75GB NVMe)
+- PRO ($79/mo): 3 environments with Cloud VPS 20 (6 vCPUs, 12GB RAM, 100GB NVMe)
+- TEAM ($199/mo): 10 environments for teams up to 10 users
 - 14-day free trial on all plans
 
 Start coding in 30 seconds - no laptop required! Join thousands of developers who've already made the switch to mobile coding.
@@ -67,7 +68,7 @@ The world's first mobile-native cloud IDE. Turn your phone into a powerful devel
 ## 💼 Investor Pitch Deck
 
 ### One-liner
-**"GitHub Codespaces meets mobile-first design with dedicated DigitalOcean infrastructure"**
+**"GitHub Codespaces meets mobile-first design with dedicated Contabo VPS infrastructure"**
 
 ### Problem
 In 2025, 3 billion people have smartphones but only 500M have laptops. Developers in emerging markets, students, and digital nomads are locked out of coding due to hardware limitations. Current solutions like Replit are desktop-first with shared resources, making mobile coding a painful afterthought.
@@ -87,8 +88,8 @@ DevPocket is the first cloud IDE built from the ground up for mobile devices. We
 - NPS score: 72
 
 ### Business Model
-SaaS subscription: $19/$99 per month with 14-day trial
-- 50-65% gross margins
+SaaS subscription: $29/$79/$199 per month with 14-day trial
+- 70-83% gross margins
 - $25 CAC, $240 LTV
 - 10:1 LTV/CAC ratio
 
@@ -175,7 +176,7 @@ Make professional software development accessible to anyone with a smartphone.
 
 ## 🐦 Twitter Bio
 
-Code anywhere 📱 | The mobile-first cloud IDE | Turn your phone into a dev machine | $9/mo | Made with ❤️ in Saigon
+Code anywhere 📱 | The mobile-first cloud IDE | Turn your phone into a dev machine | From $29/mo | Made with ❤️ in Saigon
 
 ---
 

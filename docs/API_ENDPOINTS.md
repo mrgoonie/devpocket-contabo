@@ -128,12 +128,12 @@ Delete current user account
 ## Environments API
 
 ### POST /api/v1/environments
-Create a new development environment using DigitalOcean Droplets
+Create a new development environment using Contabo VPS instances
 - **Authentication:** Required
 - **Body:** Environment creation data (name, template_id, region, size, etc.)
 - **Returns:** Created environment object with "creating" status
 - **Status:** 201 Created
-- **Architecture:** Uses DigitalOcean Droplets with full SSH access
+- **Architecture:** Uses Contabo VPS instances with full SSH access
 - **Provisioning:** Cloud-init scripts for automated setup and configuration
 
 ### GET /api/v1/environments
@@ -162,20 +162,20 @@ Delete an environment
 - **Status:** 204 No Content
 
 ### POST /api/v1/environments/{environment_id}/start
-Start an environment by powering on the droplet
+Start an environment by powering on the VPS instance
 - **Authentication:** Required
 - **Returns:** Success message
 - **Note:** Environment must be in stopped state
-- **Mechanism:** Uses DigitalOcean API to power on the droplet
+- **Mechanism:** Uses Contabo API to power on the VPS instance
 - **Benefits:** Preserves all data and configuration, maintains IP address
 
 ### POST /api/v1/environments/{environment_id}/stop
-Stop an environment by powering off the droplet
+Stop an environment by powering off the VPS instance
 - **Authentication:** Required
 - **Returns:** Success message
 - **Note:** Environment must be in running state
-- **Mechanism:** Uses DigitalOcean API to power off the droplet
-- **Benefits:** Preserves all data, no billing for powered-off droplets (only storage)
+- **Mechanism:** Uses Contabo API to power off the VPS instance
+- **Benefits:** Preserves all data, reduced billing for powered-off VPS instances
 
 ### POST /api/v1/environments/{environment_id}/restart
 Restart an environment
@@ -234,32 +234,32 @@ Initialize default templates (Admin only)
 - **Authentication:** Admin required
 - **Returns:** Success message
 
-## DigitalOcean Resources API
-Manage DigitalOcean resources for environment deployment.
+## Contabo Resources API
+Manage Contabo resources for environment deployment.
 
 ### GET /api/v1/regions
-Get available DigitalOcean regions
+Get available Contabo regions
 - **Authentication:** Required
 - **Returns:** Array of available regions with features
 
 ### GET /api/v1/sizes
-Get available droplet sizes
+Get available VPS sizes
 - **Authentication:** Required
-- **Returns:** Array of droplet sizes with pricing and specifications
+- **Returns:** Array of VPS sizes with pricing and specifications
 
 ### POST /api/v1/environments/{environment_id}/snapshot
-Create a snapshot of the environment's droplet
+Create a snapshot of the environment's VPS instance
 - **Authentication:** Required
 - **Body:** Snapshot name
 - **Returns:** Snapshot object with ID and status
 - **Status:** 201 Created
 
 ### POST /api/v1/environments/{environment_id}/resize
-Resize the droplet to a different size
+Resize the VPS instance to a different size
 - **Authentication:** Required
 - **Body:** New size specification
 - **Returns:** Resize status
-- **Note:** Droplet will be powered off during resize
+- **Note:** VPS instance will be powered off during resize
 
 ## WebSocket API
 Real-time communication endpoints for terminal and log streaming.
@@ -267,7 +267,7 @@ Real-time communication endpoints for terminal and log streaming.
 ### WebSocket /api/v1/ws/terminal/{environment_id}
 Terminal access to environment via SSH bridge
 - **Authentication:** JWT token via query parameter `?token=jwt_token`
-- **Connection:** WebSocket-to-SSH bridge to droplet
+- **Connection:** WebSocket-to-SSH bridge to VPS instance
 - **Messages:**
   - `{"type": "input", "data": "command\n"}` - Send terminal input
   - `{"type": "resize", "cols": 80, "rows": 24}` - Resize terminal
@@ -351,11 +351,11 @@ All templates include a comprehensive development stack pre-installed:
   "template_id": "string",
   "template_name": "string",
   "status": "running",
-  "droplet_id": 123456789,
-  "droplet_ip": "167.99.123.45",
+  "instance_id": 123456789,
+  "instance_ip": "167.99.123.45",
   "ssh_port": 22,
-  "region": "nyc3",
-  "size": "s-1vcpu-1gb",
+  "region": "EU",
+  "size": "V91",
   "storage_size_gb": 10,
   "volume_id": "vol-123456",
   "environment_variables": {},
@@ -397,18 +397,18 @@ All templates include a comprehensive development stack pre-installed:
 }
 ```
 
-### Droplet Object
+### VPS Instance Object
 ```json
 {
   "id": "string",
   "environment_id": "string",
-  "droplet_id": 123456789,
+  "instance_id": 123456789,
   "name": "string",
   "status": "active",
   "ip_address": "167.99.123.45",
   "private_ip": "10.132.0.2",
-  "region": "nyc3",
-  "size": "s-1vcpu-1gb",
+  "region": "EU",
+  "size": "V91",
   "image": "ubuntu-22-04-x64",
   "volume_ids": ["vol-123456"],
   "created_at": "2024-01-01T00:00:00Z",
