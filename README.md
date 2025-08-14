@@ -28,10 +28,10 @@ DevPocket Server is a production-ready FastAPI backend that provides secure, sca
 flowchart TD
    A[Mobile App] <--> B[FastAPI Server] <--> C[Contabo API]
    B --> D[WebSocket-SSH Bridge]
-   D <--> E[VPS (SSH as 'dev' user)]
+   D <--> E[VPS (SSH as &#39;dev&#39; user)]
    E --> F[Development Environment]
    F --> F1[Ubuntu 22.04 LTS]
-   F --> F2['dev' user with sudo access]
+   F --> F2[&#39;dev&#39; user with sudo access]
    F --> F3[Complete development stack]
    F --> F4[Persistent storage]
    F --> F5[AI coding tools]
